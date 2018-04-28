@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  php:
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+      args:
+        -  WWW_DATA_USER_ID=${WWW_DATA_USER_ID}
+    volumes:
+        - ./php/src:/var/www/html
+    expose:
+        - "9000"
+    restart: always
+
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+      args:
+        -  WWW_DATA_USER_ID=${WWW_DATA_USER_ID}
+    volumes:
+      - ./php/src:/var/www/html
+      - ./nginx/log:/var/log/nginx
+    environment:
+      - NGINX_HOST=${NGINX_HOST}
+      - PHP_HOST=${PHP_HOST}
+    ports:
+      - "127.0.0.1:8585:80"
+    depends_on:
+      - php
+    restart: always
