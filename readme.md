@@ -7,7 +7,7 @@
 
 ### Usage
 ```bash
-docker-compose -f docker-compose.yml -d --build --forcre-recreate up
+docker-compose -f docker-compose.yml up -d --build --force-recreate 
 ```
 
 ### Tags
